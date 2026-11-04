@@ -1,5 +1,13 @@
 import random
+import json
 
+with open("perguntas.json", "r", encoding="utf-8") as arquivo:
+    banco = json.load(arquivo)
+
+def sortearPergunta(lista):
+    sorteada = random.choice(lista)
+    lista.remove(sorteada)
+    return sorteada
 
 def resposta(mensagem, validas):
     resposta = input(mensagem)
@@ -25,3 +33,191 @@ def ganharEnergia(energia, minimo, maximo):
         energia = 100
     print("Você ganhou", ganho, "de energia. Sua energia atual é de", energia)
     return energia
+
+def perguntas(pergunta, respostas, respostaCerta):
+    print("\nPERGUNTA:", pergunta)
+    print("a)", respostas[0])
+    print("b)", respostas[1])
+    print("c)", respostas[2])
+    print("d)", respostas[3])
+
+    escolhida = resposta("Sua resposta (a/b/c/d): ", ["a", "b", "c", "d"])
+
+    if escolhida == respostaCerta:
+        return True
+    else:
+        return False
+
+
+def mostrarResultado(dados):
+    acertou = perguntas(dados["pergunta"], dados["respostas"], dados["certa"])
+    if acertou:
+        print("Correto!")
+    else:
+        print("Errado!")
+
+def situacao1():
+    print("\nSituacao 1")
+    print("Você entra na floresta.")
+    escolha = resposta("Deseja entrar na mata fechada para procurar a saída? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você adentra a mata fechada, com pouca luz e terreno irregular.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você segue a trilha aberta.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao2():
+    print("\nSituacao 2")
+    print("Anoitece e você tem que procurar abrigo.")
+    escolha = resposta("Deseja procurar um acampamento abandonado? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você encontra um acampamento abandonado.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você monta um acampamento com galhos e folhas.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao3():
+    print("\nSituacao 3")
+    print("Você está com sede.")
+    escolha = resposta("Deseja beber água do lago? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você bebe direto do lago, com risco de contaminação.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você procura uma forma de filtrar a água.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao4():
+    print("\nSituacao 4")
+    print("Você encontra frutas desconhecidas.")
+    escolha = resposta("Deseja comer as frutas, que você não sabe se são tóxicas? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você come as frutas, com o risco de intoxicação.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você come apenas frutas conhecidas.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao5():
+    print("\nSituacao 5")
+    print("Está frio e você precisa se aquecer.")
+    escolha = resposta("Deseja acender uma fogueira sem ferramentas? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você tenta acender a fogueira sem ferramentas.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você busca outra fonte de calor.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao6():
+    print("\nSituacao 6")
+    print("Você ouve um rosnado de onça vindo da mata.")
+    escolha = resposta("Deseja seguir por esse caminho? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você tenta espantar o animal.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você vai por outro caminho, muito mais longo.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao7():
+    print("\nSituacao 7")
+    print("Há uma velha ponte que atravessa um desfiladeiro.")
+    escolha = resposta("Deseja atravessar? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você atravessa a ponte.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você procura outra forma de seguir em frente.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao8():
+    print("\nSituacao 8")
+    print("Você encontra uma cobra descansando em seu caminho.")
+    escolha = resposta("Deseja seguir? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você passa por ela sem acordá-la.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você vai por outro caminho, muito mais longo.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao9():
+    print("\nSituacao 9")
+    print("Um desfiladeiro tampa seu caminho.")
+    escolha = resposta("Deseja escalar as rochas que estão bloqueando seu caminho? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você sobe pelas pedras soltas.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você busca outro caminho, mais longo.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def situacao10():
+    print("\nSituacao 10")
+    print("Você chega à margem de um riacho (troca de cenário).")
+    escolha = resposta("Deseja montar um bote improvisado para atravessar? (sim/nao): ", ["sim", "nao"])
+
+    if escolha == "sim":
+        print("Você monta um bote improvisado com troncos e cipós.(Poupou energia)")
+        dados = sortearPergunta(banco["dificeis"])
+    else:
+        print("Você não segue pelo caminho e perde todas as perguntas daquele caminho.(Gastou energia)")
+        dados = sortearPergunta(banco["faceis"])
+
+    mostrarResultado(dados)
+
+
+def jogar():
+    nomeJogador = input("Digite seu nome de jogador: ")
+    print("Bem-vindo ao jogo da Floresta,", nomeJogador + "!")
+    situacao1()
+    situacao2()
+    situacao3()
+    situacao4()
+    situacao5()
+    situacao6()
+    situacao7()
+    situacao8()
+    situacao9()
+    situacao10()
+
+jogar()
