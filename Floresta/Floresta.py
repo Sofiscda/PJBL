@@ -63,9 +63,11 @@ def situacao1():
 
     if escolha == "sim":
         print("Você adentra a mata fechada, com pouca luz e terreno irregular.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você segue a trilha aberta.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -78,9 +80,11 @@ def situacao2():
 
     if escolha == "sim":
         print("Você encontra um acampamento abandonado.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você monta um acampamento com galhos e folhas.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -93,9 +97,11 @@ def situacao3():
 
     if escolha == "sim":
         print("Você bebe direto do lago, com risco de contaminação.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você procura uma forma de filtrar a água.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -108,9 +114,11 @@ def situacao4():
 
     if escolha == "sim":
         print("Você come as frutas, com o risco de intoxicação.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você come apenas frutas conhecidas.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -123,9 +131,11 @@ def situacao5():
 
     if escolha == "sim":
         print("Você tenta acender a fogueira sem ferramentas.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você busca outra fonte de calor.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -138,9 +148,11 @@ def situacao6():
 
     if escolha == "sim":
         print("Você tenta espantar o animal.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você vai por outro caminho, muito mais longo.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -153,9 +165,11 @@ def situacao7():
 
     if escolha == "sim":
         print("Você atravessa a ponte.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você procura outra forma de seguir em frente.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -168,9 +182,11 @@ def situacao8():
 
     if escolha == "sim":
         print("Você passa por ela sem acordá-la.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você vai por outro caminho, muito mais longo.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -183,9 +199,11 @@ def situacao9():
 
     if escolha == "sim":
         print("Você sobe pelas pedras soltas.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você busca outro caminho, mais longo.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
@@ -198,9 +216,11 @@ def situacao10():
 
     if escolha == "sim":
         print("Você monta um bote improvisado com troncos e cipós.(Poupou energia)")
+        energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
     else:
         print("Você não segue pelo caminho e perde todas as perguntas daquele caminho.(Gastou energia)")
+        energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
