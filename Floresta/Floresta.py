@@ -1,6 +1,6 @@
 import random
 import json
-energia = 100   
+  
 
 with open("perguntas.json", "r", encoding="utf-8") as arquivo:
     banco = json.load(arquivo)
@@ -50,15 +50,17 @@ def perguntas(pergunta, respostas, respostaCerta):
         return False
 
 
-def mostrarResultado(dados):
+def mostrarResultado(dados, energia):
     acertou = perguntas(dados["pergunta"], dados["respostas"], dados["certa"])
     if acertou:
         print("Correto!")
+        energia = ganharEnergia(energia, 3, 8)
     else:
         print("Errado!")
+        energia = perderEnergia(energia, 3, 8)
+    return energia
 
-def situacao1():
-    print("\nSituacao 1")
+def situacao1(energia):
     print("Você entra na floresta.")
     escolha = resposta("Deseja entrar na mata fechada para procurar a saída? (sim/nao): ", ["sim", "nao"])
 
@@ -71,11 +73,10 @@ def situacao1():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
-def situacao2():
-    print("\nSituacao 2")
+
+def situacao2(energia):
     print("Anoitece e você tem que procurar abrigo.")
     escolha = resposta("Deseja procurar um acampamento abandonado? (sim/nao): ", ["sim", "nao"])
 
@@ -88,11 +89,10 @@ def situacao2():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
-def situacao3():
-    print("\nSituacao 3")
+
+def situacao3(energia):
     print("Você está com sede.")
     escolha = resposta("Deseja beber água do lago? (sim/nao): ", ["sim", "nao"])
 
@@ -105,12 +105,10 @@ def situacao3():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
 
-def situacao4():
-    print("\nSituacao 4")
+def situacao4(energia):
     print("Você encontra frutas desconhecidas.")
     escolha = resposta("Deseja comer as frutas, que você não sabe se são tóxicas? (sim/nao): ", ["sim", "nao"])
 
@@ -123,12 +121,10 @@ def situacao4():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
 
-def situacao5():
-    print("\nSituacao 5")
+def situacao5(energia):
     print("Está frio e você precisa se aquecer.")
     escolha = resposta("Deseja acender uma fogueira sem ferramentas? (sim/nao): ", ["sim", "nao"])
 
@@ -141,12 +137,10 @@ def situacao5():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
 
-def situacao6():
-    print("\nSituacao 6")
+def situacao6(energia):
     print("Você ouve um rosnado de onça vindo da mata.")
     escolha = resposta("Deseja seguir por esse caminho? (sim/nao): ", ["sim", "nao"])
 
@@ -159,12 +153,10 @@ def situacao6():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
 
-def situacao7():
-    print("\nSituacao 7")
+def situacao7(energia):
     print("Há uma velha ponte que atravessa um desfiladeiro.")
     escolha = resposta("Deseja atravessar? (sim/nao): ", ["sim", "nao"])
 
@@ -177,12 +169,10 @@ def situacao7():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
 
-def situacao8():
-    print("\nSituacao 8")
+def situacao8(energia):
     print("Você encontra uma cobra descansando em seu caminho.")
     escolha = resposta("Deseja seguir? (sim/nao): ", ["sim", "nao"])
 
@@ -195,11 +185,10 @@ def situacao8():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
-def situacao9():
-    print("\nSituacao 9")
+
+def situacao9(energia):
     print("Um desfiladeiro tampa seu caminho.")
     escolha = resposta("Deseja escalar as rochas que estão bloqueando seu caminho? (sim/nao): ", ["sim", "nao"])
 
@@ -212,12 +201,10 @@ def situacao9():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
 
-def situacao10():
-    print("\nSituacao 10")
+def situacao10(energia):
     print("Você chega à margem de um riacho (troca de cenário).")
     escolha = resposta("Deseja montar um bote improvisado para atravessar? (sim/nao): ", ["sim", "nao"])
 
@@ -230,8 +217,7 @@ def situacao10():
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
 
-    mostrarResultado(dados)
-    return energia
+    return mostrarResultado(dados, energia)
 
 
 def jogar():
