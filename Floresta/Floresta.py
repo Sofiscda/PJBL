@@ -1,5 +1,6 @@
 import random
 import json
+energia = 100   
 
 with open("perguntas.json", "r", encoding="utf-8") as arquivo:
     banco = json.load(arquivo)
@@ -71,7 +72,7 @@ def situacao1():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
-
+    return energia
 
 def situacao2():
     print("\nSituacao 2")
@@ -88,7 +89,7 @@ def situacao2():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
-
+    return energia
 
 def situacao3():
     print("\nSituacao 3")
@@ -105,6 +106,7 @@ def situacao3():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
+    return energia
 
 
 def situacao4():
@@ -122,6 +124,7 @@ def situacao4():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
+    return energia
 
 
 def situacao5():
@@ -139,6 +142,7 @@ def situacao5():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
+    return energia
 
 
 def situacao6():
@@ -156,6 +160,7 @@ def situacao6():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
+    return energia
 
 
 def situacao7():
@@ -173,6 +178,7 @@ def situacao7():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
+    return energia
 
 
 def situacao8():
@@ -190,7 +196,7 @@ def situacao8():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
-
+    return energia
 
 def situacao9():
     print("\nSituacao 9")
@@ -207,6 +213,7 @@ def situacao9():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
+    return energia
 
 
 def situacao10():
@@ -224,20 +231,65 @@ def situacao10():
         dados = sortearPergunta(banco["faceis"])
 
     mostrarResultado(dados)
+    return energia
 
 
 def jogar():
     nomeJogador = input("Digite seu nome de jogador: ")
     print("Bem-vindo ao jogo da Floresta,", nomeJogador + "!")
-    situacao1()
-    situacao2()
-    situacao3()
-    situacao4()
-    situacao5()
-    situacao6()
-    situacao7()
-    situacao8()
-    situacao9()
-    situacao10()
+
+    energia = 100
+
+    energia = situacao1(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao2(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao3(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao4(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao5(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao6(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao7(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao8(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao9(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    energia = situacao10(energia)
+    if energia <= 0:
+        print("\nSua energia acabou. Fim de jogo!")
+        return
+
+    print("\nParabéns,", nomeJogador + ", Você saiu da floresta!")
 
 jogar()
