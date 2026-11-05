@@ -10,8 +10,13 @@
         "energia": -166
     },
     {
-        "nome": "marina",
-        "pontos": 60,
-        "energia": -194
+        "nome": "Lucas",
+        "pontos": 120,
+        "energia": -186
+    },
+    {
+        "nome": "Joaquim",
+        "pontos": 130,
+        "energia": -113
     }
 ]
