@@ -18,7 +18,7 @@ def resposta(mensagem, validas):
 
 
 def perderEnergia(energia, minimo, maximo):
-    perda = random.randint(0, 5)
+    perda = random.randint(minimo, maximo)
     energia = energia - perda
     if energia < 0:
         energia = 0
