@@ -1,6 +1,7 @@
 import random
 import json
-  
+import matplotlib.pyplot as plt
+
 
 with open("perguntas.json", "r", encoding="utf-8") as arquivo:
     banco = json.load(arquivo)
@@ -80,6 +81,38 @@ def mostrarResultado(dados, energia, pontos, dificil):
 
     print("Pontuação atual:", pontos)
     return energia, pontos
+
+
+def salvarPontuacao(nome, pontos):
+    try:
+        with open("placar.json", "r", encoding="utf-8") as f:
+            placar = json.load(f)
+    except FileNotFoundError:
+        placar = {}
+
+    if nome not in placar or pontos > placar[nome]:
+        placar[nome] = pontos
+
+    with open("placar.json", "w", encoding="utf-8") as f:
+        json.dump(placar, f, ensure_ascii=False, indent=4)
+
+
+def mostrarGrafico():
+    with open("placar.json", "r", encoding="utf-8") as f:
+        placar = json.load(f)
+
+    nomes = list(placar.keys())
+    pontuacoes = list(placar.values())
+
+    plt.figure(figsize=(8, 5))
+    barras = plt.bar(nomes, pontuacoes)
+    plt.bar_label(barras)
+    plt.axhline(0, color="black", linewidth=0.8)
+    plt.title("Pontuação dos jogadores - Jogo da Floresta")
+    plt.xlabel("Jogador")
+    plt.ylabel("Pontos")
+    plt.show()
+
 
 def situacao1(energia, pontos):
     print("Você entra na floresta.")
@@ -276,10 +309,13 @@ def jogar():
         if energia <= 0:
             print("\nSua energia acabou. Fim de jogo!")
             print("Pontuação final:", pontos)
+            salvarPontuacao(nomeJogador, pontos)
+            mostrarGrafico()
             return
-
 
     print("\nParabéns,", nomeJogador + ", Você saiu da floresta!")
     print("Pontuação final:", pontos)
+    salvarPontuacao(nomeJogador, pontos)
+    mostrarGrafico()
 
 jogar()
