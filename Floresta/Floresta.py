@@ -87,7 +87,7 @@ def salvarPontuacao(nome, pontos):
     try:
         with open("placar.json", "r", encoding="utf-8") as f:
             placar = json.load(f)
-    except FileNotFoundError:
+    except (FileNotFoundError, json.JSONDecodeError):
         placar = {}
 
     if nome not in placar or pontos > placar[nome]:
