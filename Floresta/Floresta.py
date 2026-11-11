@@ -35,6 +35,20 @@ def ganharEnergia(energia, minimo, maximo):
     print("Você ganhou", ganho, "de energia. Sua energia atual é de", energia)
     return energia
 
+def pontuarFacil(acertou, pontos):
+    if acertou:
+        pontos = pontos + 10
+    return pontos
+
+
+def pontuarDificil(acertou, pontos):
+    if acertou:
+        pontos = pontos + 20
+    else:
+        pontos = pontos - 10
+    return pontos
+
+
 def perguntas(pergunta, respostas, respostaCerta):
     print("\nPERGUNTA:", pergunta)
     print("a)", respostas[0])
@@ -50,7 +64,7 @@ def perguntas(pergunta, respostas, respostaCerta):
         return False
 
 
-def mostrarResultado(dados, energia):
+def mostrarResultado(dados, energia, pontos, dificil):
     acertou = perguntas(dados["pergunta"], dados["respostas"], dados["certa"])
     if acertou:
         print("Correto!")
@@ -58,9 +72,16 @@ def mostrarResultado(dados, energia):
     else:
         print("Errado!")
         energia = perderEnergia(energia, 3, 8)
-    return energia
 
-def situacao1(energia):
+    if dificil:
+        pontos = pontuarDificil(acertou, pontos)
+    else:
+        pontos = pontuarFacil(acertou, pontos)
+
+    print("Pontuação atual:", pontos)
+    return energia, pontos
+
+def situacao1(energia, pontos):
     print("Você entra na floresta.")
     escolha = resposta("Deseja entrar na mata fechada para procurar a saída? (sim/nao): ", ["sim", "nao"])
 
@@ -68,15 +89,17 @@ def situacao1(energia):
         print("Você adentra a mata fechada, com pouca luz e terreno irregular.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você segue a trilha aberta.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao2(energia):
+def situacao2(energia, pontos):
     print("Anoitece e você tem que procurar abrigo.")
     escolha = resposta("Deseja procurar um acampamento abandonado? (sim/nao): ", ["sim", "nao"])
 
@@ -84,15 +107,17 @@ def situacao2(energia):
         print("Você encontra um acampamento abandonado.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você monta um acampamento com galhos e folhas.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao3(energia):
+def situacao3(energia, pontos):
     print("Você está com sede.")
     escolha = resposta("Deseja beber água do lago? (sim/nao): ", ["sim", "nao"])
 
@@ -100,15 +125,17 @@ def situacao3(energia):
         print("Você bebe direto do lago, com risco de contaminação.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você procura uma forma de filtrar a água.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao4(energia):
+def situacao4(energia, pontos):
     print("Você encontra frutas desconhecidas.")
     escolha = resposta("Deseja comer as frutas, que você não sabe se são tóxicas? (sim/nao): ", ["sim", "nao"])
 
@@ -116,15 +143,17 @@ def situacao4(energia):
         print("Você come as frutas, com o risco de intoxicação.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você come apenas frutas conhecidas.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao5(energia):
+def situacao5(energia, pontos):
     print("Está frio e você precisa se aquecer.")
     escolha = resposta("Deseja acender uma fogueira sem ferramentas? (sim/nao): ", ["sim", "nao"])
 
@@ -132,15 +161,17 @@ def situacao5(energia):
         print("Você tenta acender a fogueira sem ferramentas.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você busca outra fonte de calor.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao6(energia):
+def situacao6(energia, pontos):
     print("Você ouve um rosnado de onça vindo da mata.")
     escolha = resposta("Deseja seguir por esse caminho? (sim/nao): ", ["sim", "nao"])
 
@@ -148,15 +179,17 @@ def situacao6(energia):
         print("Você tenta espantar o animal.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você vai por outro caminho, muito mais longo.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao7(energia):
+def situacao7(energia, pontos):
     print("Há uma velha ponte que atravessa um desfiladeiro.")
     escolha = resposta("Deseja atravessar? (sim/nao): ", ["sim", "nao"])
 
@@ -164,15 +197,17 @@ def situacao7(energia):
         print("Você atravessa a ponte.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você procura outra forma de seguir em frente.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao8(energia):
+def situacao8(energia, pontos):
     print("Você encontra uma cobra descansando em seu caminho.")
     escolha = resposta("Deseja seguir? (sim/nao): ", ["sim", "nao"])
 
@@ -180,15 +215,17 @@ def situacao8(energia):
         print("Você passa por ela sem acordá-la.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você vai por outro caminho, muito mais longo.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao9(energia):
+def situacao9(energia, pontos):
     print("Um desfiladeiro tampa seu caminho.")
     escolha = resposta("Deseja escalar as rochas que estão bloqueando seu caminho? (sim/nao): ", ["sim", "nao"])
 
@@ -196,15 +233,17 @@ def situacao9(energia):
         print("Você sobe pelas pedras soltas.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você busca outro caminho, mais longo.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
-def situacao10(energia):
+def situacao10(energia, pontos):
     print("Você chega à margem de um riacho (troca de cenário).")
     escolha = resposta("Deseja montar um bote improvisado para atravessar? (sim/nao): ", ["sim", "nao"])
 
@@ -212,12 +251,14 @@ def situacao10(energia):
         print("Você monta um bote improvisado com troncos e cipós.(Poupou energia)")
         energia = perderEnergia(energia, 0, 5)
         dados = sortearPergunta(banco["dificeis"])
+        dificil = True
     else:
         print("Você não segue pelo caminho e perde todas as perguntas daquele caminho.(Gastou energia)")
         energia = perderEnergia(energia, 5, 10)
         dados = sortearPergunta(banco["faceis"])
+        dificil = False
 
-    return mostrarResultado(dados, energia)
+    return mostrarResultado(dados, energia, pontos, dificil)
 
 
 def jogar():
@@ -225,57 +266,20 @@ def jogar():
     print("Bem-vindo ao jogo da Floresta,", nomeJogador + "!")
 
     energia = 100
+    pontos = 0
 
-    energia = situacao1(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
+    situacoes = [situacao1, situacao2, situacao3, situacao4, situacao5,
+                 situacao6, situacao7, situacao8, situacao9, situacao10]
 
-    energia = situacao2(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
+    for situacao in situacoes:
+        energia, pontos = situacao(energia, pontos)
+        if energia <= 0:
+            print("\nSua energia acabou. Fim de jogo!")
+            print("Pontuação final:", pontos)
+            return
 
-    energia = situacao3(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
-
-    energia = situacao4(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
-
-    energia = situacao5(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
-
-    energia = situacao6(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
-
-    energia = situacao7(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
-
-    energia = situacao8(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
-
-    energia = situacao9(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
-
-    energia = situacao10(energia)
-    if energia <= 0:
-        print("\nSua energia acabou. Fim de jogo!")
-        return
 
     print("\nParabéns,", nomeJogador + ", Você saiu da floresta!")
+    print("Pontuação final:", pontos)
 
 jogar()
