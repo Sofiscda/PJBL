@@ -1,1 +1,22 @@
-[]
+[
+    {
+        "nome": "sofia",
+        "pontos": 90,
+        "energia": -232
+    },
+    {
+        "nome": "sofia",
+        "pontos": 100,
+        "energia": -166
+    },
+    {
+        "nome": "Lucas",
+        "pontos": 120,
+        "energia": -186
+    },
+    {
+        "nome": "Joaquim",
+        "pontos": 130,
+        "energia": -113
+    }
+]
