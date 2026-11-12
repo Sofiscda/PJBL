@@ -1,0 +1,122 @@
+[
+  {
+    "dificuldade": "facil",
+    "pergunta": "Qual componente é considerado o \"cérebro\" do computador, responsável por executar as instruções?",
+    "opcoes": ["Memória RAM", "Processador (CPU)", "SSD", "Fonte de energia"],
+    "resposta": "Processador (CPU)"
+  },
+  {
+    "dificuldade": "facil",
+    "pergunta": "Qual destes é um sistema operacional?",
+    "opcoes": ["Python", "HTML", "Excel", "Linux"],
+    "resposta": "Linux"
+  },
+  {
+    "dificuldade": "facil",
+    "pergunta": "Qual sistema numérico os computadores usam internamente para representar os dados?",
+    "opcoes": ["Decimal", "Romano", "Binário", "Duodecimal"],
+    "resposta": "Binário"
+  },
+  {
+    "dificuldade": "facil",
+    "pergunta": "Qual é o maior oceano do planeta?",
+    "opcoes": ["Atlântico", "Índico", "Ártico", "Pacífico"],
+    "resposta": "Pacífico"
+  },
+  {
+    "dificuldade": "facil",
+    "pergunta": "Quantos jogadores de cada time ficam em campo numa partida de futebol, contando o goleiro?",
+    "opcoes": ["9", "10", "11", "12"],
+    "resposta": "11"
+  },
+  {
+    "dificuldade": "facil",
+    "pergunta": "Qual é o maior órgão do corpo humano?",
+    "opcoes": ["Fígado", "Pulmão", "Cérebro", "Pele"],
+    "resposta": "Pele"
+  },
+  {
+    "dificuldade": "facil",
+    "pergunta": "Qual destes animais é um mamífero?",
+    "opcoes": ["Tubarão", "Pinguim", "Golfinho", "Jacaré"],
+    "resposta": "Golfinho"
+  },
+  {
+    "dificuldade": "media",
+    "pergunta": "Quais valores o for i in range(1, 6, 2) percorre?",
+    "opcoes": ["1, 2, 3, 4, 5", "1, 3, 5", "2, 4, 6", "1, 3"],
+    "resposta": "1, 3, 5"
+  },
+  {
+    "dificuldade": "media",
+    "pergunta": "O que significa a sigla HTTP?",
+    "opcoes": ["HyperText Transfer Protocol", "High Transfer Text Process", "Hyper Terminal Transport Program", "Host Transfer Technical Protocol"],
+    "resposta": "HyperText Transfer Protocol"
+  },
+  {
+    "dificuldade": "media",
+    "pergunta": "Qual é a capital do Canadá?",
+    "opcoes": ["Toronto", "Montreal", "Ottawa", "Vancouver"],
+    "resposta": "Ottawa"
+  },
+  {
+    "dificuldade": "media",
+    "pergunta": "Quem criou a obra de arte \"A Grande Onda de Kanagawa\"?",
+    "opcoes": ["Utagawa Hiroshige", "Kitagawa Utamaro", "Katsushika Hokusai", "Yayoi Kusama"],
+    "resposta": "Katsushika Hokusai"
+  },
+  {
+    "dificuldade": "media",
+    "pergunta": "Em que ano foi assinada a Lei Áurea, que aboliu a escravidão no Brasil?",
+    "opcoes": ["1822", "1871", "1889", "1888"],
+    "resposta": "1888"
+  },
+  {
+    "dificuldade": "media",
+    "pergunta": "Qual é a capital da Noruega?",
+    "opcoes": ["Estocolmo", "Copenhague", "Oslo", "Helsinque"],
+    "resposta": "Oslo"
+  },
+  {
+    "dificuldade": "media",
+    "pergunta": "Qual país sediou e venceu a primeira Copa do Mundo de futebol, em 1930?",
+    "opcoes": ["Brasil", "Argentina", "Itália", "Uruguai"],
+    "resposta": "Uruguai"
+  },
+  {
+    "dificuldade": "dificil",
+    "pergunta": "Qual aliança militar, liderada pela União Soviética, foi criada em 1955 como contraponto à OTAN?",
+    "opcoes": ["Liga das Nações", "Tríplice Aliança", "Pacto de Varsóvia", "Eixo Roma-Berlim-Tóquio"],
+    "resposta": "Pacto de Varsóvia"
+  },
+  {
+    "dificuldade": "dificil",
+    "pergunta": "De quem é o chute mais forte já registrado em uma partida oficial de futebol?",
+    "opcoes": ["Roberto Carlos", "Cristiano Ronaldo", "Ronny Heberson", "Arjen Robben"],
+    "resposta": "Ronny Heberson"
+  },
+  {
+    "dificuldade": "dificil",
+    "pergunta": "Qual videogame é considerado o mais aclamado da história pela crítica, com a maior nota já registrada no Metacritic (99)?",
+    "opcoes": ["Super Mario Bros.", "Grand Theft Auto IV", "Half-Life", "The Legend of Zelda: Ocarina of Time"],
+    "resposta": "The Legend of Zelda: Ocarina of Time"
+  },
+  {
+    "dificuldade": "dificil",
+    "pergunta": "Em 2016, qual equipe se tornou a primeira brasileira a vencer um Major de CS:GO?",
+    "opcoes": ["SK Gaming", "Luminosity Gaming", "Immortals", "MIBR"],
+    "resposta": "Luminosity Gaming"
+  },
+  {
+    "dificuldade": "dificil",
+    "pergunta": "Quantas Bolas de Ouro oficiais Pelé conquistou?(sem revisao historica)",
+    "opcoes": ["0", "3", "5", "7"],
+    "resposta": "0"
+  },
+  {
+    "dificuldade": "dificil",
+    "pergunta": "Qual é o maior deserto do mundo em área?",
+    "opcoes": ["Saara", "Deserto da Arábia", "Deserto de Gobi", "Deserto da Antártida"],
+    "resposta": "Deserto da Antártida"
+  }
+]
