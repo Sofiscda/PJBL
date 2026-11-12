@@ -333,6 +333,7 @@ def jogar():
 
     print("\nParabéns,", nomeJogador + ", Você saiu da floresta!")
     print("Pontuação final:", pontos)
+    print("Energia final:", energia)
     salvarPontuacao(nomeJogador, pontos, energia)
     mostrarGrafico()
 

@@ -1,4 +1,10 @@
 {
-    "lucas": 170,
-    "valentin": 140
+    "lucas": {
+        "pontos": 200,
+        "energia": 100
+    },
+    "valentin": {
+        "pontos": 140,
+        "energia": 0
+    }
 }
