@@ -83,15 +83,20 @@ def mostrarResultado(dados, energia, pontos, dificil):
     return energia, pontos
 
 
-def salvarPontuacao(nome, pontos):
+def salvarPontuacao(nome, pontos, energia):
     try:
         with open("placar.json", "r", encoding="utf-8") as f:
             placar = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         placar = {}
 
-    if nome not in placar or pontos > placar[nome]:
-        placar[nome] = pontos
+    # converte o formato antigo (só pontos) para o novo (pontos e energia)
+    for jogador in placar:
+        if not isinstance(placar[jogador], dict):
+            placar[jogador] = {"pontos": placar[jogador], "energia": 0}
+
+    if nome not in placar or pontos > placar[nome]["pontos"]:
+        placar[nome] = {"pontos": pontos, "energia": energia}
 
     with open("placar.json", "w", encoding="utf-8") as f:
         json.dump(placar, f, ensure_ascii=False, indent=4)
@@ -102,15 +107,28 @@ def mostrarGrafico():
         placar = json.load(f)
 
     nomes = list(placar.keys())
-    pontuacoes = list(placar.values())
+    pontuacoes = []
+    energias = []
+    for nome in nomes:
+        pontuacoes.append(placar[nome]["pontos"])
+        energias.append(placar[nome]["energia"])
+
+    posicoes = list(range(len(nomes)))
+    largura = 0.4
+    posPontos = [p - largura / 2 for p in posicoes]
+    posEnergia = [p + largura / 2 for p in posicoes]
 
     plt.figure(figsize=(8, 5))
-    barras = plt.bar(nomes, pontuacoes)
-    plt.bar_label(barras)
+    barrasPontos = plt.bar(posPontos, pontuacoes, width=largura, label="Pontos")
+    barrasEnergia = plt.bar(posEnergia, energias, width=largura, label="Energia")
+    plt.bar_label(barrasPontos)
+    plt.bar_label(barrasEnergia)
+    plt.xticks(posicoes, nomes)
     plt.axhline(0, color="black", linewidth=0.8)
-    plt.title("Pontuação dos jogadores - Jogo da Floresta")
+    plt.title("Pontuação e energia dos jogadores - Jogo da Floresta")
     plt.xlabel("Jogador")
-    plt.ylabel("Pontos")
+    plt.ylabel("Valor")
+    plt.legend()
     plt.show()
 
 
@@ -309,13 +327,13 @@ def jogar():
         if energia <= 0:
             print("\nSua energia acabou. Fim de jogo!")
             print("Pontuação final:", pontos)
-            salvarPontuacao(nomeJogador, pontos)
+            salvarPontuacao(nomeJogador, pontos, energia)
             mostrarGrafico()
             return
 
     print("\nParabéns,", nomeJogador + ", Você saiu da floresta!")
     print("Pontuação final:", pontos)
-    salvarPontuacao(nomeJogador, pontos)
+    salvarPontuacao(nomeJogador, pontos, energia)
     mostrarGrafico()
 
 jogar()
