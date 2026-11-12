@@ -1,7 +1,13 @@
 import json
 import random
 import matplotlib.pyplot as plt
+import os
 
+PASTA = os.path.dirname(os.path.abspath(__file__))
+CAMINHO_PERGUNTAS = os.path.join(PASTA, "perguntasCaverna.json")
+
+with open(CAMINHO_PERGUNTAS, encoding="utf-8") as f:
+    perguntas = json.load(f)
 PONTOS_INICIAIS = 0
 # dificuldade: (pontos ganhos por acerto, pontos perdidos por erro)
 PONTOS = {
