@@ -2,6 +2,9 @@ import random
 import json
 import os
 import matplotlib.pyplot as plt
+import tkinter as tk
+from tkinter import messagebox
+
 
 def grafico_energia():
     
@@ -73,31 +76,133 @@ def salvar_dados(nome, pontos, energia):
     with open("dados_montanha.json", "w", encoding="utf-8") as arquivo:
         json.dump(dados, arquivo, indent=4, ensure_ascii=False)
 
+def atualizar_status():
+    status.config(text=f"Energia: {energia} | Pontos: {pontos}")
+
+
+def limpar_tela():
+    for widget in conteudo.winfo_children():
+        widget.destroy()
+
+
+def escolher_caminho(descricao, caminho1, caminho2):
+
+    limpar_tela()
+    atualizar_status()
+
+    tk.Label(conteudo, text=descricao, wraplength=550,
+             font=("Arial", 12)).pack(pady=20)
+
+    escolha = tk.IntVar()
+
+    tk.Label(conteudo, text="1 - " + caminho1,
+             wraplength=550).pack(pady=10)
+
+    tk.Button(conteudo, text="1", width=15,
+              command=lambda: escolha.set(1)).pack()
+
+    tk.Label(conteudo, text="2 - " + caminho2,
+             wraplength=550).pack(pady=10)
+
+    tk.Button(conteudo, text="2", width=15,
+              command=lambda: escolha.set(2)).pack()
+
+    janela.wait_variable(escolha)
+
+    print("Caminho escolhido:", escolha.get())
+
+    return escolha.get()
+
+
+def inserir_nome():
+
+    limpar_tela()
+    atualizar_status()
+
+    tk.Label(conteudo, text="Você chegou ao topo da montanha!",
+             font=("Arial", 14)).pack(pady=20)
+
+    tk.Label(conteudo, text="Digite seu nome:").pack()
+
+    entrada = tk.Entry(conteudo)
+    entrada.pack(pady=10)
+
+    nome = tk.StringVar()
+
+    def confirmar():
+        if entrada.get().strip():
+            nome.set(entrada.get().strip())
+            print("Nome do jogador:", nome.get())
+        else:
+            messagebox.showwarning("Atenção", "Digite seu nome!")
+
+    tk.Button(conteudo, text="Confirmar",
+              command=confirmar).pack(pady=10)
+
+    entrada.bind("<Return>", lambda evento: confirmar())
+
+    janela.wait_variable(nome)
+
+    return nome.get()
+
 def pergunta(pergunta, resposta_correta, pontos_ganhos, pontos_perdidos):
 
-    print(pergunta)
-    resposta = input("Escreva: ").lower()
+    limpar_tela()
+    atualizar_status()
 
-    if resposta == resposta_correta:
-        print("Você acertou!")
-        return pontos_ganhos
+    tk.Label(conteudo, text=pergunta,
+             font=("Arial", 14), wraplength=550).pack(pady=25)
 
-    else:
-        print("Você errou!")
-        return pontos_perdidos
+    entrada = tk.Entry(conteudo, width=35)
+    entrada.pack(pady=10)
+    entrada.focus_set()
 
+    resultado = tk.IntVar()
+
+    def enviar_resposta():
+
+        resposta = entrada.get().strip().lower()
+        print("Resposta recebida:", resposta)
+
+        if resposta == resposta_correta:
+            print("Você acertou!")
+            messagebox.showinfo("Resultado", "Você acertou!")
+            resultado.set(pontos_ganhos)
+
+        else:
+            print("Você errou!")
+            messagebox.showinfo("Resultado", "Você errou!")
+            resultado.set(pontos_perdidos)
+
+    tk.Button(conteudo, text="Enviar",
+              command=enviar_resposta).pack(pady=10)
+
+    entrada.bind("<Return>", lambda evento: enviar_resposta())
+
+    janela.wait_variable(resultado)
+
+    return resultado.get()
 
 energia = 100
 pontos = 0
+janela = tk.Tk()
+janela.title("Aventura na Montanha")
+janela.geometry("650x500")
+janela.resizable(False, False)
 
+status = tk.Label(janela, text="", font=("Arial", 13, "bold"))
+status.pack(pady=15)
 
-print(f"Energia atual: {energia}")
+conteudo = tk.Frame(janela)
+conteudo.pack(expand=True, fill="both", padx=20, pady=10)
 
-print("Você encontrou uma montanha!")
-print("Precisa subir ela!")
-print("Você está subindo a montanha quando se depara com um deslizamento de pedras que bloqueia o caminho, escolha:")
-print("1- esperar as pedras pararem de cair e seguir por um caminho alternativo mais longo. (Segura)")
-print("2- atravessar rapidamente uma passagem estreita entre as pedras, exigindo agilidade e atenção. (Arriscado)")
+atualizar_status()
+
+escolha1 = escolher_caminho(
+    "Você encontrou uma montanha! Precisa subir ela! Você se depara com um deslizamento de pedras.",
+    "Esperar as pedras pararem de cair e seguir por um caminho alternativo mais longo. (Seguro)",
+    "Atravessar rapidamente uma passagem estreita entre as pedras. (Arriscado)"
+)
 
 escolha1 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -110,6 +215,7 @@ if escolha1 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -120,10 +226,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Você encontrou uma grande fenda entre duas partes da montanha, impedindo a passagem pela trilha principal. Escolha:")
-print("1- Descer um pouco pela encosta e atravessar por um caminho mais estreito e seguro. (Seguro)")
-print("2- Saltar sobre a fenda, calculando a distância e o impulso necessários para alcançar o outro lado. (Arriscado)")
+escolha2 = escolher_caminho(
+    "Você encontrou uma grande fenda entre duas partes da montanha.",
+    "Descer um pouco pela encosta e atravessar por um caminho mais estreito e seguro. (Seguro)",
+    "Saltar sobre a fenda, calculando a distância e o impulso necessários. (Arriscado)"
+)
 
 escolha2 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -136,6 +245,7 @@ if escolha2 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -146,10 +256,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Uma árvore caída bloqueia a trilha principal, impedindo sua passagem. Escolha")
-print("1- contornar a árvore por uma trilha lateral com pouca inclinação. (Seguro)")
-print("2- escalar a árvore e passar por cima dela, mantendo o equilíbrio. (Arriscado)")
+escolha3 = escolher_caminho(
+    "Uma árvore caída bloqueia a trilha principal.",
+    "Contornar a árvore por uma trilha lateral com pouca inclinação. (Seguro)",
+    "Escalar a árvore e passar por cima dela, mantendo o equilíbrio. (Arriscado)"
+)
 
 escolha3 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -162,6 +275,7 @@ if escolha3 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -172,10 +286,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Você chega a uma parede de rochas que precisa superar para alcançar uma parte mais alta da montanha. Escolha:")
-print("1- dar a volta pela encosta, seguindo uma trilha longa e menos inclinada. (Segura)")
-print("2- escalar a parede rochosa usando pequenas fendas como apoio. (Arriscado)")
+escolha4 = escolher_caminho(
+    "Você chega a uma parede de rochas que precisa superar.",
+    "Dar a volta pela encosta, seguindo uma trilha longa e menos inclinada. (Seguro)",
+    "Escalar a parede rochosa usando pequenas fendas como apoio. (Arriscado)"
+)
 
 escolha4 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -188,6 +305,7 @@ if escolha4 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -198,10 +316,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Uma neblina densa cobre a montanha, dificultando a visão e tornando o caminho perigoso. Escolha:")
-print("1- parar e esperar a neblina diminuir antes de continuar pela trilha sinalizada. (Segura)")
-print("2- seguir por um caminho estreito usando um mapa e uma bússola para se orientar. (Arriscada)")
+escolha5 = escolher_caminho(
+    "Uma neblina densa cobre a montanha, dificultando a visão.",
+    "Esperar a neblina diminuir antes de continuar pela trilha sinalizada. (Seguro)",
+    "Seguir por um caminho estreito usando um mapa e uma bússola. (Arriscado)"
+)
 
 escolha5 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -214,6 +335,7 @@ if escolha5 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -224,10 +346,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Durante a subida, você encontra uma ponte de cordas antiga que atravessa um precipício. Algumas tábuas estão quebradas e as cordas estão desgastadas. Escolha:")
-print("1- procurar uma passagem alternativa pela encosta, mesmo que seja mais longa. (Segura)")
-print("2- atravessar a ponte cuidadosamente, equilibrando-se nas tábuas e segurando as cordas.(Arriscada)")
+escolha6 = escolher_caminho(
+    "Você encontra uma ponte de cordas antiga que atravessa um precipício.",
+    "Procurar uma passagem alternativa pela encosta, mesmo que seja mais longa. (Seguro)",
+    "Atravessar a ponte cuidadosamente, equilibrando-se nas tábuas. (Arriscado)"
+)
 
 escolha6 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -240,6 +365,7 @@ if escolha6 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -250,10 +376,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Durante a subida, o jogador percebe que uma grande quantidade de neve está deslizando pela encosta em sua direção. Escolha:")
-print("1- esconder-se atrás de grandes rochas até que a avalanche passe. (Segura)")
-print("2- correr por uma trilha íngreme para alcançar uma área segura antes que a neve chegue. (Arriscada)")
+escolha7 = escolher_caminho(
+    "Uma grande quantidade de neve está deslizando pela encosta em sua direção.",
+    "Esconder-se atrás de grandes rochas até que a avalanche passe. (Seguro)",
+    "Correr por uma trilha íngreme para alcançar uma área segura. (Arriscado)"
+)
 
 escolha7 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -266,6 +395,7 @@ if escolha7 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -276,10 +406,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("O jogador encontra uma grande fenda entre duas partes da montanha, impedindo a passagem pela trilha principal. Escolha:")
-print("1- descer um pouco pela encosta e atravessar por um caminho mais estreito e seguro. (Seguro)")
-print("2- saltar sobre a fenda, calculando a distância e o impulso necessários para alcançar o outro lado. (Arriscado)")
+escolha8 = escolher_caminho(
+    "Você encontra uma grande fenda entre duas partes da montanha.",
+    "Descer um pouco pela encosta e atravessar por um caminho mais estreito e seguro. (Seguro)",
+    "Saltar sobre a fenda, calculando a distância e o impulso necessários. (Arriscado)"
+)
 
 escolha8 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -292,6 +425,7 @@ if escolha8 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -302,10 +436,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Perto de algumas árvores e flores da montanha, o jogador encontra um enxame de abelhas que bloqueia a trilha. Escolha:")
-print("1- fazer um desvio pela floresta, evitando se aproximar do enxame. (Seguro)")
-print("2- atravessar rapidamente uma área aberta próxima ao enxame, desviando das abelhas. (Arriscado)")
+escolha9 = escolher_caminho(
+    "Você encontra um enxame de abelhas que bloqueia a trilha.",
+    "Fazer um desvio pela floresta, evitando se aproximar do enxame. (Seguro)",
+    "Atravessar rapidamente uma área aberta próxima ao enxame. (Arriscado)"
+)
 
 escolha9 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -319,6 +456,7 @@ if escolha9 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -329,10 +467,13 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
-print("Depois de uma forte chuva, parte da montanha fica coberta de lama, tornando a subida instável e perigosa. Escolha:")
-print("1- seguir por um caminho rochoso mais longo, onde há maior firmeza para caminhar. (Seguro)")
-print("2- subir diretamente pela encosta lamacenta, mantendo o equilíbrio e usando raízes e pedras como apoio. (Arriscado)")
+escolha10 = escolher_caminho(
+    "Depois de uma forte chuva, parte da montanha fica coberta de lama.",
+    "Seguir por um caminho rochoso mais longo e firme. (Seguro)",
+    "Subir diretamente pela encosta lamacenta, usando raízes e pedras como apoio. (Arriscado)"
+)
 
 escolha10 = int(input("Qual caminho vai escolher? (1/2): "))
 
@@ -345,6 +486,7 @@ if escolha10 == 1:
         10,
         0
     )
+    atualizar_status()
 
 else:
     perda = random.randint(10,25)
@@ -355,19 +497,27 @@ else:
         20,
         -10
     )
+    atualizar_status()
 
 print("Você chegou ao topo da montanha")
 
-nome = input("Digite seu nome:")
+nome = inserir_nome()
 
 salvar_dados(nome,pontos,energia)
 
 if energia > 70:
-    print(f"FINAL ALEGRE - Você terminou com {energia} de energia e está ótimo(a).")
+
+    messagebox.showinfo("FINAL ALEGRE", f"Você terminou com {energia} de energia e está ótimo(a).")
+
 elif energia >= 30 and energia <= 69:
-    print(f"FINAL IRÔNICO - Você terminou com {energia} de energia e está tão fraco que não consegue nem fazer piadas. Além de estar parecendo um zumbi")
+
+    messagebox.showinfo("FINAL IRÔNICO", f"Você terminou com {energia} de energia e está tão fraco que não consegue nem fazer piadas. Além de estar parecendo um zumbi")
+
 else:
-    print(f"FINAL SURREAL - Você terminou com {energia} de energia e está quase sem forças e vai precisar de suporte para voltar a como vivia antes")
+
+    messagebox.showinfo("FINAL SURREAL", f"Você terminou com {energia} de energia e está quase sem forças e vai precisar de suporte para voltar a como vivia antes")
 
 grafico_pontos()
 grafico_energia()
+
+janela.destroy()
