@@ -1,9 +1,14 @@
 import json
 import random
+import os
 import matplotlib.pyplot as plt
 
+PASTA = os.path.dirname(os.path.abspath(__file__))
+CAMINHO_PERGUNTAS = os.path.join(PASTA, "perguntasCaverna.json")
+ARQUIVO_RESULTADOS = os.path.join(PASTA, "resultadosCaverna.json")
+
 PONTOS_INICIAIS = 0
-# dificuldade: (pontos ganhos por acerto, pontos perdidos por erro)
+
 PONTOS = {
     "facil": (10, 5),
     "media": (20, 10),
@@ -26,7 +31,6 @@ ENERGIA = {
     "acampamento_descanso": (10, 20),
     "acampamento_bom": (10, 20),
     "acampamento_ruim": (10, 20),
-    # Custos de energia de cada escolha/movimento
     "entrar_caverna": (3, 8),
     "escolher_caminho": (2, 6),
     "voltar": (2, 6),
@@ -34,21 +38,18 @@ ENERGIA = {
     "urso_passo": (2, 5),
 }
 
-ARQUIVO_RESULTADOS = "resultadosCaverna.json"
 MAX_BARRAS = 10
 
-
-def lerJson(nome_arquivo="perguntasCaverna.json"):
+def lerJson(nome_arquivo=CAMINHO_PERGUNTAS):
     try:
         with open(nome_arquivo, "r", encoding="utf-8") as arquivo:
             return json.load(arquivo)
     except FileNotFoundError:
-        print(f"Erro: não achei o arquivo '{nome_arquivo}' na pasta do jogo.")
+        print(f"Erro: não achei o arquivo '{os.path.basename(nome_arquivo)}' na pasta do jogo.")
         raise SystemExit
     except json.JSONDecodeError as erro:
-        print(f"Erro: o arquivo '{nome_arquivo}' tem um problema na linha {erro.lineno}.")
+        print(f"Erro: o arquivo '{os.path.basename(nome_arquivo)}' tem um problema na linha {erro.lineno}.")
         raise SystemExit
-
 
 def ler_opcao(mensagem, validas):
     while True:
@@ -57,20 +58,17 @@ def ler_opcao(mensagem, validas):
             return resposta
         print(f"Opção inválida! Digite uma destas: {', '.join(validas)}")
 
-
 def perder_energia(energia, faixa):
     perda = random.randint(*faixa)
     energia = max(0, energia - perda)
     print(f"Você perdeu {perda} de energia. Sua energia atual é de {energia}")
     return energia
 
-
 def ganhar_energia(energia, faixa):
     ganho = random.randint(*faixa)
     energia = min(100, energia + ganho)
     print(f"Você ganhou {ganho} de energia. Sua energia atual é de {energia}")
     return energia
-
 
 def carregar_resultados(nome_arquivo=ARQUIVO_RESULTADOS):
     """Lê as partidas salvas (de você ou de outras pessoas)."""
@@ -80,11 +78,9 @@ def carregar_resultados(nome_arquivo=ARQUIVO_RESULTADOS):
     except (FileNotFoundError, json.JSONDecodeError):
         return []
 
-
 def salvar_resultados(resultados, nome_arquivo=ARQUIVO_RESULTADOS):
     with open(nome_arquivo, "w", encoding="utf-8") as arquivo:
         json.dump(resultados, arquivo, ensure_ascii=False, indent=2)
-
 
 def mostrar_grafico(resultados):
     """Gráfico de barras simples com pontos e energia final das últimas partidas."""
@@ -108,7 +104,6 @@ def mostrar_grafico(resultados):
     eixo.legend()
     fig.tight_layout()
     plt.show()
-
 
 def perguntas(banco, quantidade, pontos, historico, dificuldade=None,
               parar_acertos=None, parar_erros=None):
@@ -147,7 +142,6 @@ def perguntas(banco, quantidade, pontos, historico, dificuldade=None,
         if parar_erros and erros >= parar_erros:
             break
     return acertos, erros, pontos
-
 
 def main():
     banco_perguntas = lerJson()
