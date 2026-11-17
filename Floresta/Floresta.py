@@ -132,7 +132,7 @@ def mostrarGrafico():
     plt.show()
 
 
-    def situacao(energia, pontos, texto, decisao, textoSim, textoNao):
+def situacao(energia, pontos, texto, decisao, textoSim, textoNao):
     print(texto)
     escolha = resposta(decisao + " (sim/nao): ", ["sim", "nao"])
 
@@ -202,7 +202,7 @@ def jogar():
     pontos = 0
 
     for s in situacoes:
-        energia, pontos = situacoes(energia, pontos, s[0], s[1], s[2], s[3])
+        energia, pontos = situacao(energia, pontos, s[0], s[1], s[2], s[3])
         if energia <= 0:
             print("\nSua energia acabou. Fim de jogo!")
             print("Pontuação final:", pontos)
