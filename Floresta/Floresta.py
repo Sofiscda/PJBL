@@ -1,9 +1,11 @@
 import random
 import json
 import matplotlib.pyplot as plt
+import os
 
+pasta = os.path.dirname(os.path.abspath(__file__))
 
-with open("perguntas.json", "r", encoding="utf-8") as arquivo:
+with open(os.path.join(pasta, "perguntas.json"), "r", encoding="utf-8") as arquivo:
     banco = json.load(arquivo)
 
 def sortearPergunta(lista):
@@ -85,7 +87,7 @@ def mostrarResultado(dados, energia, pontos, dificil):
 
 def salvarPontuacao(nome, pontos, energia):
     try:
-        with open("placar.json", "r", encoding="utf-8") as f:
+        with open(os.path.join(pasta, "placar.json"), "r", encoding="utf-8") as f:
             placar = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         placar = {}
@@ -98,12 +100,12 @@ def salvarPontuacao(nome, pontos, energia):
     if nome not in placar or pontos > placar[nome]["pontos"]:
         placar[nome] = {"pontos": pontos, "energia": energia}
 
-    with open("placar.json", "w", encoding="utf-8") as f:
+    with open(os.path.join(pasta, "placar.json"), "w", encoding="utf-8") as f:
         json.dump(placar, f, ensure_ascii=False, indent=4)
 
 
 def mostrarGrafico():
-    with open("placar.json", "r", encoding="utf-8") as f:
+    with open(os.path.join(pasta, "placar.json"), "r", encoding="utf-8") as f:
         placar = json.load(f)
 
     nomes = list(placar.keys())
