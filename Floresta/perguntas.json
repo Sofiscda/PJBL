@@ -1,0 +1,106 @@
+{
+  "faceis": [
+    {
+      "pergunta": "O que significa a sigla CPU?",
+      "respostas": ["Central Power Unit", "Central Processing Unit", "Computer Personal Unit", "Control Processing Utility"],
+      "certa": "b"
+    },
+    {
+      "pergunta": "Qual destes armazena dados de forma permanente, mesmo com o computador desligado?",
+      "respostas": ["Memória RAM", "Memória cache", "Registrador", "SSD"],
+      "certa": "d"
+    },
+    {
+      "pergunta": "Qual é a capital do Brasil?",
+      "respostas": ["Rio de Janeiro", "São Paulo", "Brasília", "Salvador"],
+      "certa": "c"
+    },
+    {
+      "pergunta": "Quantos planetas tem o Sistema Solar?",
+      "respostas": ["7", "8", "9", "10"],
+      "certa": "b"
+    },
+    {
+      "pergunta": "Quem pintou a Mona Lisa?",
+      "respostas": ["Michelangelo", "Pablo Picasso", "Vincent van Gogh", "Leonardo da Vinci"],
+      "certa": "d"
+    },
+    {
+      "pergunta": "Qual é o maior oceano do mundo?",
+      "respostas": ["Atlântico", "Índico", "Pacífico", "Ártico"],
+      "certa": "c"
+    },
+    {
+      "pergunta": "Em que continente fica o Egito?",
+      "respostas": ["Ásia", "África", "Europa", "Oceania"],
+      "certa": "b"
+    },
+    {
+      "pergunta": "Quanto é 12 × 12?",
+      "respostas": ["122", "124", "132", "144"],
+      "certa": "d"
+    },
+    {
+      "pergunta": "Qual elemento químico tem o símbolo O?",
+      "respostas": ["Ouro", "Ósmio", "Oxigênio", "Ozônio"],
+      "certa": "c"
+    },
+    {
+      "pergunta": "Em que ano o Brasil declarou independência de Portugal?",
+      "respostas": ["1789", "1822", "1889", "1500"],
+      "certa": "b"
+    }
+  ],
+  "dificeis": [
+    {
+      "pergunta": "Qual é a complexidade de tempo média da busca binária em um vetor ordenado?",
+      "respostas": ["O(n)", "O(n log n)", "O(log n)", "O(1)"],
+      "certa": "c"
+    },
+    {
+      "pergunta": "Em qual camada do modelo OSI ocorre o roteamento de pacotes pelo protocolo IP?",
+      "respostas": ["Camada de Enlace (2)", "Camada de Transporte (4)", "Camada de Sessão (5)", "Camada de Rede (3)"],
+      "certa": "d"
+    },
+    {
+      "pergunta": "Qual propriedade ACID garante que uma transação seja executada por completo ou não seja executada de forma alguma?",
+      "respostas": ["Atomicidade", "Consistência", "Isolamento", "Durabilidade"],
+      "certa": "a"
+    },
+    {
+      "pergunta": "Qual é a capital da Austrália?",
+      "respostas": ["Sydney", "Melbourne", "Canberra", "Perth"],
+      "certa": "c"
+    },
+    {
+      "pergunta": "Quem escreveu Grande Sertão: Veredas?",
+      "respostas": ["Graciliano Ramos", "João Guimarães Rosa", "Machado de Assis", "Jorge Amado"],
+      "certa": "b"
+    },
+    {
+      "pergunta": "Quais são os dois países da América do Sul que não fazem fronteira com o Brasil?",
+      "respostas": ["Chile e Equador", "Chile e Bolívia", "Equador e Peru", "Argentina e Chile"],
+      "certa": "a"
+    },
+    {
+      "pergunta": "Em que ano caiu o Muro de Berlim?",
+      "respostas": ["1985", "1991", "1987", "1989"],
+      "certa": "d"
+    },
+    {
+      "pergunta": "Qual é o osso mais longo do corpo humano?",
+      "respostas": ["Úmero", "Tíbia", "Fêmur", "Fíbula"],
+      "certa": "c"
+    },
+    {
+      "pergunta": "Qual é a velocidade aproximada da luz no vácuo?",
+      "respostas": ["150.000 km/s", "300.000 km/s", "30.000 km/s", "3.000.000 km/s"],
+      "certa": "b"
+    },
+    {
+      "pergunta": "Qual tratado, assinado em 1494, dividiu as terras do Novo Mundo entre Portugal e Espanha?",
+      "respostas": ["Tratado de Versalhes", "Tratado de Madri", "Tratado de Utrecht", "Tratado de Tordesilhas"],
+      "certa": "d"
+    }
+  ]
+}
