@@ -79,6 +79,22 @@ def salvar_dados(nome, pontos, energia):
 def atualizar_status():
     status.config(text=f"Energia: {energia} | Pontos: {pontos}")
 
+def iniciar_jogo():
+
+    limpar_tela()
+
+    tk.Label(conteudo, text="Você chegou na fase da montanha!",
+             font=("Arial", 18, "bold")).pack(pady=40)
+
+    tk.Label(conteudo, text="Prepare-se para enfrentar os desafios e chegar ao topo!",
+             font=("Arial", 12), wraplength=500).pack(pady=20)
+
+    continuar = tk.IntVar()
+
+    tk.Button(conteudo, text="Começar", width=20, height=2,
+              command=lambda: continuar.set(1)).pack(pady=30)
+
+    janela.wait_variable(continuar)
 
 def limpar_tela():
     for widget in conteudo.winfo_children():
@@ -198,16 +214,18 @@ conteudo.pack(expand=True, fill="both", padx=20, pady=10)
 
 atualizar_status()
 
+iniciar_jogo()
+
+
 escolha1 = escolher_caminho(
     "Você encontrou uma montanha! Precisa subir ela! Você se depara com um deslizamento de pedras.",
     "Esperar as pedras pararem de cair e seguir por um caminho alternativo mais longo. (Seguro)",
     "Atravessar rapidamente uma passagem estreita entre as pedras. (Arriscado)"
 )
 
-escolha1 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha1 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Quantos dias tem uma semana?",
@@ -218,7 +236,7 @@ if escolha1 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é a capital do Brasil?",
@@ -234,10 +252,9 @@ escolha2 = escolher_caminho(
     "Saltar sobre a fenda, calculando a distância e o impulso necessários. (Arriscado)"
 )
 
-escolha2 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha2 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Qual é a cor do céu em um dia ensolarado?",
@@ -248,7 +265,7 @@ if escolha2 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Quantos lados tem um triângulo? ",
@@ -264,10 +281,9 @@ escolha3 = escolher_caminho(
     "Escalar a árvore e passar por cima dela, mantendo o equilíbrio. (Arriscado)"
 )
 
-escolha3 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha3 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Quantas pernas tem uma aranha?",
@@ -278,7 +294,7 @@ if escolha3 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é o maior oceano do mundo?",
@@ -294,10 +310,9 @@ escolha4 = escolher_caminho(
     "Escalar a parede rochosa usando pequenas fendas como apoio. (Arriscado)"
 )
 
-escolha4 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha4 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Qual animal é conhecido como rei da selva?",
@@ -308,7 +323,7 @@ if escolha4 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é o resultado de 9 × 8?",
@@ -324,10 +339,9 @@ escolha5 = escolher_caminho(
     "Seguir por um caminho estreito usando um mapa e uma bússola. (Arriscado)"
 )
 
-escolha5 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha5 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Qual é o maior planeta do Sistema Solar?",
@@ -338,7 +352,7 @@ if escolha5 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Quantos jogadores de cada equipe ficam em campo em uma partida de futebol?",
@@ -354,10 +368,9 @@ escolha6 = escolher_caminho(
     "Atravessar a ponte cuidadosamente, equilibrando-se nas tábuas. (Arriscado)"
 )
 
-escolha6 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha6 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Quantos meses tem um ano?",
@@ -368,7 +381,7 @@ if escolha6 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é o resultado de 8 x 8?",
@@ -384,10 +397,9 @@ escolha7 = escolher_caminho(
     "Correr por uma trilha íngreme para alcançar uma área segura. (Arriscado)"
 )
 
-escolha7 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha7 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Qual é o nome do satélite natural da Terra?",
@@ -398,7 +410,7 @@ if escolha7 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é o resultado de 9 x 9? ",
@@ -414,10 +426,9 @@ escolha8 = escolher_caminho(
     "Saltar sobre a fenda, calculando a distância e o impulso necessários. (Arriscado)"
 )
 
-escolha8 = int(input("Qual caminho vai escolher? (1/2): "))
 
 if escolha8 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Qual fruta é conhecida por ser amarela e curvada?",
@@ -428,7 +439,7 @@ if escolha8 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é o resultado de 72 / 4 ?",
@@ -444,11 +455,8 @@ escolha9 = escolher_caminho(
     "Atravessar rapidamente uma área aberta próxima ao enxame. (Arriscado)"
 )
 
-escolha9 = int(input("Qual caminho vai escolher? (1/2): "))
-
-
 if escolha9 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Em qual planeta vivemos?",
@@ -459,7 +467,7 @@ if escolha9 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é o resultado de 24 x 4?",
@@ -475,10 +483,8 @@ escolha10 = escolher_caminho(
     "Subir diretamente pela encosta lamacenta, usando raízes e pedras como apoio. (Arriscado)"
 )
 
-escolha10 = int(input("Qual caminho vai escolher? (1/2): "))
-
 if escolha10 == 1:
-    perda = random.randint(20,40)
+    perda = random.randint(6,8)
     energia -= perda
     pontos += pergunta(
         "Quantas horas tem um dia?",
@@ -489,7 +495,7 @@ if escolha10 == 1:
     atualizar_status()
 
 else:
-    perda = random.randint(10,25)
+    perda = random.randint(3,5)
     energia -= perda
     pontos += pergunta(
         "Qual é o resultado de 21 / 3?",
