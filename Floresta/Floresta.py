@@ -2,11 +2,16 @@ import random
 import json
 import matplotlib.pyplot as plt
 import os
+import sys
+
+PASTA_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PASTA_PROJETO not in sys.path:
+    sys.path.insert(0, PASTA_PROJETO)
+from interface import print, input
 
 pasta = os.path.dirname(os.path.abspath(__file__))
 
-with open(os.path.join(pasta, "perguntas.json"), "r", encoding="utf-8") as arquivo:
-    banco = json.load(arquivo)
+banco = {"faceis": [], "dificeis": []}
 
 def sortearPergunta(lista):
     sorteada = random.choice(lista)
@@ -105,8 +110,15 @@ def salvarPontuacao(nome, pontos, energia):
 
 
 def mostrarGrafico():
-    with open(os.path.join(pasta, "placar.json"), "r", encoding="utf-8") as f:
-        placar = json.load(f)
+    try:
+        with open(os.path.join(pasta, "placar.json"), "r", encoding="utf-8") as f:
+            placar = json.load(f)
+    except (FileNotFoundError, json.JSONDecodeError):
+        placar = {}
+
+    if not placar:
+        print("Ainda não há resultados para mostrar.")
+        return
 
     nomes = list(placar.keys())
     pontuacoes = []
@@ -197,7 +209,11 @@ situacoes = [
 
 
 def jogar():
-    nomeJogador = input("Digite seu nome de jogador: ")
+    global banco
+    with open(os.path.join(pasta, "perguntas.json"), "r", encoding="utf-8") as arquivo:
+        banco = json.load(arquivo)
+
+    nomeJogador = input("Digite seu nome de jogador: ").strip() or "Jogador"
     print("Bem-vindo ao jogo da Floresta,", nomeJogador + "!")
 
     energia = 100
@@ -209,13 +225,14 @@ def jogar():
             print("\nSua energia acabou. Fim de jogo!")
             print("Pontuação final:", pontos)
             salvarPontuacao(nomeJogador, pontos, energia)
-            mostrarGrafico()
-            return
+            return {"jogador": nomeJogador, "pontos": pontos, "energia": energia}
 
     print("\nParabéns,", nomeJogador + ", Você saiu da floresta!")
     print("Pontuação final:", pontos)
     print("Energia final:", energia)
     salvarPontuacao(nomeJogador, pontos, energia)
-    mostrarGrafico()
+    return {"jogador": nomeJogador, "pontos": pontos, "energia": energia}
 
-jogar()
+
+if __name__ == "__main__":
+    print("Execute o jogo pelo arquivo main.py na pasta principal.")

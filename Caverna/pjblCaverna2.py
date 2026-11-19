@@ -2,6 +2,12 @@ import json
 import random
 import matplotlib.pyplot as plt
 import os
+import sys
+
+PASTA_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if PASTA_PROJETO not in sys.path:
+    sys.path.insert(0, PASTA_PROJETO)
+from interface import print, input
 
 PASTA = os.path.dirname(os.path.abspath(__file__))
 CAMINHO_PERGUNTAS = os.path.join(PASTA, "perguntasCaverna.json")
@@ -40,11 +46,11 @@ ENERGIA = {
     "urso_passo": (2, 5),
 }
 
-ARQUIVO_RESULTADOS = "resultadosCaverna.json"
+ARQUIVO_RESULTADOS = os.path.join(PASTA, "resultadosCaverna.json")
 MAX_BARRAS = 10
 
 
-def lerJson(nome_arquivo="perguntasCaverna.json"):
+def lerJson(nome_arquivo=CAMINHO_PERGUNTAS):
     try:
         with open(nome_arquivo, "r", encoding="utf-8") as arquivo:
             return json.load(arquivo)
@@ -155,7 +161,7 @@ def perguntas(banco, quantidade, pontos, historico, dificuldade=None,
     return acertos, erros, pontos
 
 
-def main():
+def iniciar_caverna():
     banco_perguntas = lerJson()
 
     energia = 100
@@ -386,7 +392,8 @@ def main():
         "destino": destino,
     })
     salvar_resultados(resultados)
-    mostrar_grafico(resultados)
+    return {"jogador": nome, "pontos": pontos, "energia": energia, "destino": destino}
 
 
-main()
+if __name__ == "__main__":
+    print("Execute o jogo pelo arquivo main.py na pasta principal.")
