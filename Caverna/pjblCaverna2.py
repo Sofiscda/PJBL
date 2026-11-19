@@ -7,7 +7,7 @@ import sys
 PASTA_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PASTA_PROJETO not in sys.path:
     sys.path.insert(0, PASTA_PROJETO)
-from interface import print, input
+from interface import print, input, escolher_opcao
 
 PASTA = os.path.dirname(os.path.abspath(__file__))
 CAMINHO_PERGUNTAS = os.path.join(PASTA, "perguntasCaverna.json")
@@ -63,11 +63,8 @@ def lerJson(nome_arquivo=CAMINHO_PERGUNTAS):
 
 
 def ler_opcao(mensagem, validas):
-    while True:
-        resposta = input(mensagem).strip()
-        if resposta in validas:
-            return resposta
-        print(f"Opção inválida! Digite uma destas: {', '.join(validas)}")
+    opcoes = [(str(valor), str(valor)) for valor in validas]
+    return escolher_opcao(mensagem, opcoes)
 
 
 def perder_energia(energia, faixa):

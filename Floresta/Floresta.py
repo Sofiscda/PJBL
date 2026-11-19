@@ -7,7 +7,7 @@ import sys
 PASTA_PROJETO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if PASTA_PROJETO not in sys.path:
     sys.path.insert(0, PASTA_PROJETO)
-from interface import print, input
+from interface import print, input, escolher_opcao
 
 pasta = os.path.dirname(os.path.abspath(__file__))
 
@@ -19,11 +19,12 @@ def sortearPergunta(lista):
     return sorteada
 
 def resposta(mensagem, validas):
-    resposta = input(mensagem)
-    while resposta not in validas:
-        print("Opção inválida! Tente de novo.")
-        resposta = input(mensagem)
-    return resposta
+    if validas == ["sim", "nao"]:
+        opcoes = [("1 - Sim", "sim"), ("2 - Não", "nao")]
+    else:
+        opcoes = [(f"{i} - {valor}", valor) for i, valor in enumerate(validas, start=1)]
+
+    return escolher_opcao(mensagem, opcoes)
 
 
 def perderEnergia(energia, minimo, maximo):

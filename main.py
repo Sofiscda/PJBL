@@ -34,7 +34,17 @@ class Jogo:
         self.entrada.pack(side="left", fill="x", expand=True, ipady=6)
         self.botao_enviar = tk.Button(quadro_entrada, text="Enviar", state="disabled")
         self.botao_enviar.pack(side="left", padx=(8, 0))
-        configurar(janela, self.area, self.entrada, self.botao_enviar)
+
+        self.quadro_opcoes = tk.Frame(janela)
+        self.quadro_opcoes.pack(fill="x", padx=20, pady=5)
+
+        configurar(
+            janela,
+            self.area,
+            self.entrada,
+            self.botao_enviar,
+            self.quadro_opcoes
+        )
 
         self.menu = tk.Frame(janela)
         self.menu.pack(pady=12)
