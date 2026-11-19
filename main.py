@@ -10,74 +10,91 @@ from Montanha import montanha1
 class Jogo:
     def __init__(self, janela):
         self.janela = janela
-        self.janela.title("Aventura - Escolha sua fase")
-        self.janela.geometry("760x600")
+        self.janela.title("Aventura")
+        self.janela.geometry("760x560")
         self.janela.minsize(650, 500)
         self.fase_atual = None
+        self.funcao_grafico_atual = None
 
-        titulo = tk.Label(janela, text="AVENTURA", font=("Arial", 22, "bold"))
-        titulo.pack(pady=(15, 5))
+        self.status = tk.Label(
+            janela, text="AVENTURA", font=("Arial", 20, "bold")
+        )
+        self.status.pack(pady=(22, 8))
 
         self.subtitulo = tk.Label(
             janela,
-            text="Escolha por qual fase deseja começar.",
-            font=("Arial", 11)
+            text="Escolha sua jornada!",
+            font=("Arial", 12),
+            wraplength=620,
+            justify="center"
         )
-        self.subtitulo.pack(pady=(0, 10))
+        self.subtitulo.pack(pady=(8, 24))
 
-        self.area = tk.Text(janela, height=20, wrap="word", state="disabled", font=("Arial", 10))
-        self.area.pack(fill="both", expand=True, padx=20, pady=8)
-
-        quadro_entrada = tk.Frame(janela)
-        quadro_entrada.pack(fill="x", padx=20, pady=5)
-        self.entrada = tk.Entry(quadro_entrada, state="disabled")
-        self.entrada.pack(side="left", fill="x", expand=True, ipady=6)
-        self.botao_enviar = tk.Button(quadro_entrada, text="Enviar", state="disabled")
-        self.botao_enviar.pack(side="left", padx=(8, 0))
+        self.area = tk.Label(
+            janela,
+            text="",
+            font=("Arial", 13),
+            wraplength=590,
+            justify="center",
+            height=9,
+            anchor="center"
+        )
+        self.area.pack(fill="both", expand=True, padx=30, pady=10)
 
         self.quadro_opcoes = tk.Frame(janela)
-        self.quadro_opcoes.pack(fill="x", padx=20, pady=5)
+        self.quadro_opcoes.pack(pady=15)
 
-        configurar(
-            janela,
-            self.area,
-            self.entrada,
-            self.botao_enviar,
-            self.quadro_opcoes
-        )
-
-        self.menu = tk.Frame(janela)
-        self.menu.pack(pady=12)
+        configurar(janela, self.area, self.quadro_opcoes)
         self.mostrar_menu_inicial()
 
-    def limpar_menu(self):
-        for widget in self.menu.winfo_children():
+    def limpar_opcoes(self):
+        for widget in self.quadro_opcoes.winfo_children():
             widget.destroy()
 
+    def criar_botao(self, texto, comando, largura=28):
+        tk.Button(
+            self.quadro_opcoes,
+            text=texto,
+            width=largura,
+            height=2,
+            font=("Arial", 10),
+            command=comando
+        ).pack(pady=6)
+
     def mostrar_menu_inicial(self):
-        self.limpar_menu()
+        limpar()
+        self.limpar_opcoes()
+        self.fase_atual = None
+        self.status.config(text="AVENTURA")
         self.subtitulo.config(text="Escolha por qual fase deseja começar.")
-        opcoes = [
-            ("Montanha", self.iniciar_montanha),
-            ("Caverna", self.iniciar_caverna),
-            ("Floresta", self.iniciar_floresta),
-        ]
-        for texto, comando in opcoes:
-            tk.Button(self.menu, text=texto, width=18, command=comando).pack(side="left", padx=7)
+        self.area.config(text="Prepare-se para enfrentar desafios, responder perguntas e administrar sua energia!")
+        self.criar_botao("Montanha", lambda: self.mostrar_intro("Montanha", self.iniciar_montanha))
+        self.criar_botao("Caverna", lambda: self.mostrar_intro("Caverna", self.iniciar_caverna))
+        self.criar_botao("Floresta", lambda: self.mostrar_intro("Floresta", self.iniciar_floresta))
+
+    def mostrar_intro(self, nome, iniciar):
+        limpar()
+        self.limpar_opcoes()
+        self.fase_atual = nome
+        self.status.config(text=f"Aventura na {nome}")
+        self.subtitulo.config(text=f"Você chegou à fase da {nome.lower()}!")
+        self.area.config(text="Prepare-se para enfrentar os desafios desta fase. Faça suas escolhas pelos botões e tente chegar ao final com energia e pontos!")
+        self.criar_botao("Começar", iniciar)
+        self.criar_botao("Voltar", self.mostrar_menu_inicial)
 
     def preparar_fase(self, nome):
         self.fase_atual = nome
-        self.limpar_menu()
+        self.limpar_opcoes()
         limpar()
-        self.subtitulo.config(text=f"Fase atual: {nome}")
-        self.entrada.configure(state="disabled")
-        self.botao_enviar.configure(state="disabled")
+        self.status.config(text=f"Aventura na {nome}")
+        self.subtitulo.config(text="Energia e pontuação serão atualizadas durante a aventura.")
+        self.area.config(text="")
 
     def iniciar_caverna(self):
         self.preparar_fase("Caverna")
         try:
             resultado = pjblCaverna2.iniciar_caverna()
-            self.finalizar_fase(resultado, pjblCaverna2.mostrar_grafico)
+            self.finalizar_fase(resultado, lambda: pjblCaverna2.mostrar_grafico(pjblCaverna2.carregar_resultados()))
         except Exception as erro:
             self.tratar_erro(erro)
 
@@ -108,19 +125,14 @@ class Jogo:
     def finalizar_fase(self, resultado, funcao_grafico):
         if not resultado:
             resultado = {"jogador": "Jogador", "pontos": 0, "energia": 0}
-        self.subtitulo.config(
-            text=f"{self.fase_atual} concluída | Pontos: {resultado['pontos']} | Energia: {resultado['energia']}"
-        )
-        self.entrada.configure(state="disabled")
-        self.botao_enviar.configure(state="disabled")
-        self.limpar_menu()
-        tk.Label(self.menu, text="O que deseja fazer agora?", font=("Arial", 11, "bold")).pack(pady=5)
-        tk.Button(self.menu, text="Ver gráfico desta fase", width=24,
-                  command=lambda: self.abrir_grafico(funcao_grafico)).pack(pady=4)
-        tk.Button(self.menu, text="Escolher outra fase", width=24,
-                  command=self.mostrar_menu_inicial).pack(pady=4)
-        tk.Button(self.menu, text="Encerrar jogo", width=24,
-                  command=self.janela.destroy).pack(pady=4)
+        self.funcao_grafico_atual = funcao_grafico
+        self.limpar_opcoes()
+        self.status.config(text=f"Fase {self.fase_atual} concluída!")
+        self.subtitulo.config(text=f"Jogador: {resultado.get('jogador', 'Jogador')} | Pontos: {resultado.get('pontos', 0)} | Energia: {resultado.get('energia', 0)}")
+        self.area.config(text="Parabéns por concluir esta etapa! O que deseja fazer agora?")
+        self.criar_botao("Ver gráfico desta fase", lambda: self.abrir_grafico(funcao_grafico))
+        self.criar_botao("Escolher outra fase", self.mostrar_menu_inicial)
+        self.criar_botao("Encerrar jogo", self.janela.destroy)
 
     def abrir_grafico(self, funcao):
         try:
@@ -136,5 +148,6 @@ class Jogo:
 
 if __name__ == "__main__":
     janela = tk.Tk()
+    janela.state("zoomed")
     jogo = Jogo(janela)
     janela.mainloop()

@@ -1,28 +1,27 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox, simpledialog
 
 janela = None
 area_texto = None
-entrada = None
-botao_enviar = None
 quadro_opcoes = None
 variavel_resposta = None
+_historico = []
 
 
-def configurar(janela_principal, texto, campo, botao, quadro):
-    global janela, area_texto, entrada, botao_enviar, quadro_opcoes
+def configurar(janela_principal, texto, quadro):
+    global janela, area_texto, quadro_opcoes, _historico
     janela = janela_principal
     area_texto = texto
-    entrada = campo
-    botao_enviar = botao
     quadro_opcoes = quadro
+    _historico = []
 
 
 def escrever(mensagem):
-    area_texto.configure(state="normal")
-    area_texto.insert("end", str(mensagem) + "\n")
-    area_texto.see("end")
-    area_texto.configure(state="disabled")
+    global _historico
+    _historico.append(str(mensagem))
+    # Mantém a tela legível, mostrando as mensagens mais recentes.
+    _historico = _historico[-7:]
+    area_texto.configure(text="\n\n".join(_historico))
     janela.update_idletasks()
 
 
@@ -39,72 +38,46 @@ def limpar_opcoes():
 
 
 def escolher_opcao(mensagem, opcoes):
-    """Mostra uma opção por botão e devolve o valor escolhido."""
     global variavel_resposta
-
     limpar_opcoes()
-    entrada.configure(state="disabled")
-    botao_enviar.configure(state="disabled")
-
     if mensagem:
         escrever(mensagem)
 
     variavel_resposta = tk.StringVar(master=janela)
 
-    for opcao in opcoes:
+    for indice, opcao in enumerate(opcoes, start=1):
         if isinstance(opcao, tuple):
             texto_botao, valor = opcao
         else:
-            texto_botao, valor = str(opcao), str(opcao)
+            texto_botao, valor = f"{indice} - {opcao}", str(opcao)
 
         tk.Button(
             quadro_opcoes,
             text=texto_botao,
-            width=35,
+            font=("Arial", 10),
+            width=48,
             height=2,
             command=lambda resposta=valor: variavel_resposta.set(str(resposta))
-        ).pack(pady=3)
+        ).pack(pady=5)
 
     janela.wait_variable(variavel_resposta)
     resposta = variavel_resposta.get()
     limpar_opcoes()
-    escrever("> " + resposta)
+    escrever("Você escolheu: " + resposta)
     return resposta
 
 
 def input(mensagem=""):
-    global variavel_resposta
-
-    limpar_opcoes()
     if mensagem:
         escrever(mensagem)
-
-    variavel_resposta = tk.StringVar(master=janela, value="__aguardando__")
-    entrada.configure(state="normal")
-    entrada.delete(0, "end")
-    entrada.focus_set()
-    botao_enviar.configure(state="normal")
-
-    def enviar(event=None):
-        if variavel_resposta.get() != "__aguardando__":
-            return
-        variavel_resposta.set(entrada.get())
-        entrada.configure(state="disabled")
-        botao_enviar.configure(state="disabled")
-
-    botao_enviar.configure(command=enviar)
-    entrada.bind("<Return>", enviar)
-    janela.wait_variable(variavel_resposta)
-    resposta = variavel_resposta.get()
-    escrever("> " + resposta)
-    entrada.unbind("<Return>")
-    return resposta
+    resposta = simpledialog.askstring("Aventura", mensagem or "Digite sua resposta:", parent=janela)
+    return resposta or ""
 
 
 def limpar():
-    area_texto.configure(state="normal")
-    area_texto.delete("1.0", "end")
-    area_texto.configure(state="disabled")
+    global _historico
+    _historico = []
+    area_texto.configure(text="")
     limpar_opcoes()
 
 

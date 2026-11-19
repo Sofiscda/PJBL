@@ -217,6 +217,8 @@ def iniciar_montanha(root):
     pontos = 0
     janela = tk.Toplevel(root)
     janela.title("Aventura na Montanha")
+    janela.state("zoomed")
+    janela.resizable(True, True)
     janela.geometry("650x500")
     janela.resizable(False, False)
 
